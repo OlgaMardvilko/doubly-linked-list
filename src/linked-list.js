@@ -1,6 +1,5 @@
 const Node = require('./node');
 
-class LinkedList {
 class LinkedList extends Node {
     constructor() {
       super(); // this.data = null, this.prev = null, this.next = null
