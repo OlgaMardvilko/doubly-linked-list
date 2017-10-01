@@ -2,7 +2,7 @@ const Node = require('./node');
 
 class LinkedList extends Node {
     constructor() {
-      super(); // this.data = null, this.prev = null, this.next = null
+     // super(); // this.data = null, this.prev = null, this.next = null
       this._head = new Node();
       this._tail = new Node();
       this.elements = [];
