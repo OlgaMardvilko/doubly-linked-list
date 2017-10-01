@@ -1,106 +1,105 @@
 const Node = require('./node');
 
 class LinkedList {
-constructor() {
-		this._head = null;
-		this._tail = null;
-		this.lenght = 0;
-		return this;
-	}  //он ('присваивает 0 этой длине   'it('assign 0 to this.length
+class LinkedList extends Node {
+    constructor() {
+      super(); // this.data = null, this.prev = null, this.next = null
+      this._head = new Node();
+      this._tail = new Node();
+      this.elements = [];
+      this.length = this.elements.length;
+    }
 
     append(data) {
-		var node = new Node(data);
-		if (!this.head){
-			this._head = node;
-			this._tail = node;
-		}else{
-			this._tail.next = node;
-			this._tail = node;
-		}
-		this.length++;
-		return this;
-		
-	} 	//should assign any nodes to this._head and this._tail if list is empty
-						//вставляем лист, если лист пуст должен назначать любые узлы this._head и this._tail
-						//should add new data to the end of list
-						// если лист не пуст, то должен добавить новые данные в конец списка
+      var pos = this.elements.length;
+
+      if (pos === 0) {
+        this.elements.push(new Node(data));
+        this._head = this.elements[pos];
+        this._tail = this.elements[pos];
+      } else {
+        this.elements.push(new Node(data, pos - 1));
+        this.elements[pos - 1].next = pos;
+        this._tail = this.elements[pos];
+      }
+
+      this.length = this.elements.length;
+      return this;
+    }
+
     head() {
-		return this._head.data;
-	}			//should return data from the this.head
-						// должен возвращать данные из this.head
-				
+      return this._head.data;
+    }
+
     tail() {
-		return this._tail.data;
-	}			//should return data from the this.tail
-						//должен возвращать данные из this.tail
+      return this._tail.data;
+    }
 
     at(index) {
-		for (var i = 0; i < this.length; i++) {
-            if (i === index) {
-                return this._head.data[i];
-            }
-        }
-	}		//should return Node.data by index
-						//должен возвращать Node.data по индексу
+      return this.elements[index].data;
+    }
 
     insertAt(index, data) {
-		this.insertBefore(data, this.children[index]);
-	}  //should insert data by index
-								//следует вставлять данные по индексу
+      var old = this.elements;
+      var length = old.length;
+      this.clear();
+      for (var i = 0; i < length + 1; i++ ) {
+        if (i < index ) {
+          this.append(old[i].data);
+        } else if (i === index) {
+          this.append(data);
+        } else {
+          this.append(old[i - 1].data);
+        }
+      }
+      return this;
+    }
 
     isEmpty() {
-		if (this.length === 0) {
-            return true;
-        } else {
-            return false;
-        }
-	}			//should return true if list is empty
-							//должен возвращать true, если список пуст
+      if (this.elements.length === 0) {
+        return true;
+      } return false;
+    }
 
     clear() {
-		this._head = null;
-		this._tail = null;
-		this.lenght = 0;
-		return this;
-		
-	}				//should clear the list
-							//должен очистить список
+      this._head = new Node();
+      this._tail = new Node();
+      this.elements = [];
+      this.length = this.elements.length;
+      return this;
+    }
 
     deleteAt(index) {
-		for (var i = 0; i < this.length; i++) {
-            if (i === index) {
-                this.removeChild(i);
-            }
+      var old = this.elements;
+      var length = old.length;
+      this.clear();
+      for (var i = 0; i < length; i++ ) {
+        if (i < index ) {
+          this.append(old[i].data);
+        } else if (i > index) {
+          this.append(old[i].data);
         }
-	}		//should delete element by index
-							//должен удалить элемент по индексу
+      }
+      return this;
+    }
 
     reverse() {
-		var current = this._tail;
-		while (current != null){
-			this.append(current.data);
-			current = current.Previous;
-		}
-	}			//should reverse the list
+      var old = this.elements;
+      var length = old.length;
+      this.clear();
+      for (var i = length - 1; i >= 0; i-- ) {
+        this.append(old[i].data);
+      }
+      return this;
+    }
 
     indexOf(data) {
-		var curr = this._head;
-        var ind = 0;
-        while (curr) {
-            if (curr.data === data) {
-                return ind;
-            } else {
-                curr = curr.next;
-                ++ind;
-            }
+      for (var i = 0; i < this.elements.length; i++) {
+        if (this.elements[i].data === data) {
+          return i
         }
-        
-        return -1;
-	}		//should return index of element if data is found
-							//должен возвращать индекс элемента, если данные найдены
-							//should return -1 if data not found
-				//should return -1 if data not found
-				
+      } return -1;
+    }
 }
 
 module.exports = LinkedList;
