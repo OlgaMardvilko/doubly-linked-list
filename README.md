@@ -1,4 +1,4 @@
-### Doubly linked list
+### Doubly linked list my
 
 ---
 ⚠️ DO NOT SUBMIT PRS TO THIS REPO ⚠️
